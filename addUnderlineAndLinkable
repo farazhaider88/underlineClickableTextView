@@ -1,0 +1,24 @@
+ class func addUnderlineAndLinkable(withText:String,linkText:[String],link:[String])->NSMutableAttributedString{
+        
+        let originalText = withText
+        let fullTextRange = NSRange(location: 0, length: (originalText as NSString).length)
+        
+        let attributedString = NSMutableAttributedString(string: originalText)
+        
+        attributedString.addAttributes([
+            .font: UIFont(name: "Lato-Regular", size: 13.0)!,
+            .foregroundColor: UIColor(red: 111.0 / 255.0, green: 114.0 / 255.0, blue: 115.0 / 255.0, alpha: 1.0),
+            .kern: 0.15],range: fullTextRange)
+        
+        
+        let sequence = zip(linkText, link)
+        for (_linkText, _link) in sequence {
+            let linkRange = attributedString.mutableString.range(of: _linkText)
+            
+            attributedString.addAttribute(.link, value: _link, range: linkRange)
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSNumber(value: 1), range: linkRange)
+            
+        }
+        
+        return attributedString
+    }
